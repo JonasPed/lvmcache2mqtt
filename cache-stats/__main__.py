@@ -18,9 +18,12 @@ def main():
     while(True):
         for device in config.get_devices():
             data = collector.collect(device['device'])
+            data['device'] = device['device']
+            data['device_alias'] = device['device_alias']
             print(data)
             mq.publish(device['target_topic'], json.dumps(data))
-            time.sleep(30)
+        
+        time.sleep(30)
 
     
 def log(self, client, userdata, level, buf):
