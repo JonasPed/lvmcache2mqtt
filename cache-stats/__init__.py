@@ -1,3 +1,2 @@
-from . collect import StatsCollector
-from . config import Config
-
+from .collect import StatsCollector
+from .config import Config

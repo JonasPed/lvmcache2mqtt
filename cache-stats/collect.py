@@ -1,5 +1,6 @@
-import subprocess
 import json
+import subprocess
+
 
 class StatsCollector:
     def collect(self, device):
@@ -13,5 +14,5 @@ class StatsCollector:
 
         json_result = json.loads(result.stdout.decode('UTF-8'))
 
+        # TODO Do some checkong on the output.
         return json_result['report'][0]['lv'][0]
-

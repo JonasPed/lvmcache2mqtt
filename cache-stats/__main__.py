@@ -1,8 +1,10 @@
-from . import Config
-from . import StatsCollector
-import paho.mqtt.client as mqtt
-import time
 import json
+import time
+
+import paho.mqtt.client as mqtt
+
+from . import Config, StatsCollector
+
 
 def main():
     config_file = 'config.yml'
