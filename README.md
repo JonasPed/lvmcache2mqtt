@@ -4,7 +4,8 @@ Python module to publish LVM cache (dmcache) statistics to MQTT. Data can then, 
 
 ## Configuration
 
-Configuration example.
+Configuration example:
+
 ```yaml
 mqtt:
     host: mqtt_broker_hostname
