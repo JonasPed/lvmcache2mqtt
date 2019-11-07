@@ -1,3 +1,6 @@
 **/*.pyc
 venv
 .vscode
+build
+dist
+lvmcache2mqtt.egg-info
