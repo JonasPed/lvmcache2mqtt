@@ -21,6 +21,8 @@ def main():
             data = collector.collect(device['device'])
             data['device'] = device['device']
             data['device_alias'] = device['device_alias']
+            data['cache_read_hits_percentage'] = data['cache_read_hits'] / (data['cache_read_hits'] + data['cache_read_misses']) * 100
+            data['cache_write_hits_percentage'] = data['cache_write_hits'] / (data['cache_write_hits'] + data['cache_write_misses']) * 100
             print(data)
             mq.publish(device['target_topic'], json.dumps(data))
         
