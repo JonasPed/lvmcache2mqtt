@@ -5,7 +5,6 @@ import paho.mqtt.client as mqtt
 
 from . import Config, StatsCollector
 
-
 def main():
     config_file = 'config.yml'
     config = Config(config_file)
