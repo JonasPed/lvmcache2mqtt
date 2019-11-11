@@ -30,14 +30,13 @@ def main():
 
 def _calculate_percentage(fraction, total):
     if total != 0:
-        return freaction / total * 100
+        return fraction / total * 100
     
     return 0
 
 def log(self, client, userdata, level, buf):
-    if level >= MQTT_LOG_INFO:
+    if level >= client.MQTT_LOG_INFO:
         print(buf)
-
 
 if __name__ == '__main__':
     main()
