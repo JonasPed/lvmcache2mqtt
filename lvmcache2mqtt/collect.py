@@ -15,4 +15,13 @@ class StatsCollector:
         json_result = json.loads(result.stdout.decode('UTF-8'))
 
         # TODO Do some checkong on the output.
-        return json_result['report'][0]['lv'][0]
+        return self._zero_when_blank(json_result['report'][0]['lv'][0])
+
+
+    def _zero_when_blank(self, json):
+        for item in json:
+            if json.get(item) is "":
+                json[item] = "0"
+
+        return json
+
