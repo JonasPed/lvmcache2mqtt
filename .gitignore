@@ -4,3 +4,6 @@ venv
 build
 dist
 lvmcache2mqtt.egg-info
+
+# Config file used when testing. 
+config.yml
