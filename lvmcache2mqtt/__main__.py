@@ -31,7 +31,7 @@ def main():
                                                                         int(data['cache_read_hits']), 
                                                                         (int(data['cache_read_hits']) + int(data['cache_read_misses']))) 
                 data['cache_write_hits_percentage'] = _calculate_percentage(int(last_run['cache_write_hits']), 
-                                                                        (int(last_run['cache_write_hits']) + int(last_run['cache_read_misses'])),
+                                                                        (int(last_run['cache_write_hits']) + int(last_run['cache_write_misses'])),
                                                                             int(last_run['cache_read_hits_percentage']),
                                                                             int(data['cache_write_hits']), 
                                                                             (int(data['cache_write_hits']) + int(data['cache_write_misses'])))
