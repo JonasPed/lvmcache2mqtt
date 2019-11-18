@@ -52,7 +52,7 @@ def _calculate_percentage(last_run_fraction, last_run_total, last_percentage, fr
         return last_percentage
     
     if total != 0:
-        return fraction / total * 100
+        return (fraction-last_run_fraction) / (total-last_run_total) * 100
     
     return 0
 
