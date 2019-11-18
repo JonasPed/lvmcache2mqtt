@@ -6,6 +6,8 @@ import paho.mqtt.client as mqtt
 from . import Config, StatsCollector
 
 def main():
+    last_call = {}
+
     config_file = 'config.yml'
     config = Config(config_file)
 
@@ -21,14 +23,34 @@ def main():
             data = collector.collect(device['device'])
             data['device'] = device['device']
             data['device_alias'] = device['device_alias']
-            data['cache_read_hits_percentage'] = _calculate_percentage(int(data['cache_read_hits']), (int(data['cache_read_hits']) + int(data['cache_read_misses']))) 
-            data['cache_write_hits_percentage'] = _calculate_percentage(int(data['cache_write_hits']), (int(data['cache_write_hits']) + int(data['cache_write_misses'])))
-            print(data)
-            mq.publish(device['target_topic'], json.dumps(data))
-        
+            last_run = last_call.get(device['target_topic'])
+            if last_run != None:
+                data['cache_read_hits_percentage'] = _calculate_percentage(int(last_run['cache_read_hits']), 
+                                                                        (int(last_run['cache_read_hits']) + int(last_run['cache_read_misses'])),
+                                                                        int(last_run['cache_read_hits_percentage']),
+                                                                        int(data['cache_read_hits']), 
+                                                                        (int(data['cache_read_hits']) + int(data['cache_read_misses']))) 
+                data['cache_write_hits_percentage'] = _calculate_percentage(int(last_run['cache_write_hits']), 
+                                                                        (int(last_run['cache_write_hits']) + int(last_run['cache_read_misses'])),
+                                                                            int(last_run['cache_read_hits_percentage']),
+                                                                            int(data['cache_write_hits']), 
+                                                                            (int(data['cache_write_hits']) + int(data['cache_write_misses'])))
+                print(data)
+                last_call[device['target_topic']] = data
+                mq.publish(device['target_topic'], json.dumps(data))
+            else:
+                data['cache_write_hits_percentage'] = 0
+                data['cache_read_hits_percentage'] = 0
+                print('Skipping publish due to first run')
+                print(data)
+                last_call[device['target_topic']] = data
+
         time.sleep(30)
 
-def _calculate_percentage(fraction, total):
+def _calculate_percentage(last_run_fraction, last_run_total, last_percentage, fraction, total):
+    if last_run_fraction == fraction and last_run_total == total:
+        return last_percentage
+    
     if total != 0:
         return fraction / total * 100
     
