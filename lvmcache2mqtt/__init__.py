@@ -1,4 +1,4 @@
 from .collect import StatsCollector
 from .config import Config
 
-__version__ = '0.3.0'
+__version__ = '0.4.1'
